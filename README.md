@@ -19,9 +19,6 @@ This is a dynamic and responsive E-commerce website that allows users to explore
 - **Admin Panel**: Manage products, orders, and users 
 
 
-# GOSHOP - An eCommerce Website
-
-This is a dynamic and responsive E-commerce website that allows users to explore and purchase a variety of products. The website includes functionalities such as user authentication, product browsing, shopping cart management, and order processing.
 
 
 ## Tech Stack
