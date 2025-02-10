@@ -5,7 +5,7 @@ const productCategory = [
   { id: 4, label: "Mobiles", value: "mobiles" },
   { id: 5, label: "Mouse", value: "Mouse" },
   { id: 6, label: "Printers", value: "printers" },
-  { id: 7, label: "Processor", value: "processor" },
+  { id: 7, label: "Laptops", value: "laptops" },
   { id: 8, label: "Refrigerator", value: "refrigerator" },
   { id: 9, label: "Speakers", value: "speakers" },
   { id: 10, label: "Trimmers", value: "trimmers" },
