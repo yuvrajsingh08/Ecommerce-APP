@@ -17,6 +17,10 @@ import ProductDetails from "./pages/ProductDetails";
 import CategoryProduct from "./pages/CategoryProduct";
 import Cart from "./pages/Cart";
 import SearchProduct from "./pages/SearchProduct";
+import Success from "./pages/Success";
+import Cancel from "./pages/Cancel";
+import OrderPage from "./pages/OrderPage";
+import AllOrders from "./pages/AllOrders";
 
 
 function App() {
@@ -24,12 +28,9 @@ function App() {
   const { fetchUserDetails, fetchUserAddToCart } = useContext(AppContext);
 
   useEffect(() => {
-    /**user Details */
     fetchUserDetails();
-    // console.log("key", process.env.REACT_APP_API_KEY);
-    /**user Details cart product */
     fetchUserAddToCart();
-  }, []);
+  },[]);
   return (
     <>
       <ToastContainer position="top-center" />
@@ -45,11 +46,16 @@ function App() {
           <Route path="/admin-panel" element={<AdminPanel />}>
             <Route path="all-users" element={<AllUsers />} />
             <Route path="all-products" element={<AllProducts />} />
+            <Route path="all-orders" element={<AllOrders />} />
           </Route>
           <Route path="/product-category" element={<CategoryProduct />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/search" element={<SearchProduct />} />
+          <Route path="/success" element={<Success/>} />
+          <Route path="/cancel" element={<Cancel/>} />
+          <Route path="/order" element={<OrderPage/>} />
+          <Route path="/all-order" element={<AllOrders/>} />
         </Routes>
       </main>
       <Footer />

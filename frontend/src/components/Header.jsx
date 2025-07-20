@@ -1,15 +1,19 @@
-import React, { useContext, useState } from "react";
-import logo from "../assest/logo.png"
-import { FaCircleUser, FaRegCircleUser } from "react-icons/fa6";
-import { FaSearch} from "react-icons/fa";
+import React, { useContext, useEffect, useState } from "react";
+import logo from "../assest/logo.png";
+import { FaCircleUser, FaMicrophoneSlash, FaRegCircleUser } from "react-icons/fa6";
+import { FaSearch } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BsCart } from "react-icons/bs";
 import SummaryApi from "../common";
 import { toast } from "react-toastify";
-import {AppContext} from "../context"
+import { AppContext } from "../context";
 import { setUserDetails } from "../store/userSlice";
 import ROLE from "../common/role";
+import { CiMicrophoneOn } from "react-icons/ci";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -17,7 +21,7 @@ const Header = () => {
   const { cartProductCount } = useContext(AppContext);
   const [menuDisplay, setMenuDisplay] = useState(false);
   const user = useSelector((state) => state?.user?.user);
-
+  const {transcript, listening, resetTranscript} = useSpeechRecognition();
   const searchInput = useLocation();
   // console.log(searchInput);
   const URLSearch = new URLSearchParams(searchInput?.search);
@@ -29,7 +33,7 @@ const Header = () => {
       method: SummaryApi.logout_user.method,
       credentials: "include",
     });
-    
+
     const data = await fetchData.json();
 
     if (data.success) {
@@ -52,6 +56,21 @@ const Header = () => {
       navigate("/search");
     }
   };
+  const handleVoiceSearch = () => {
+       if (listening) {
+      SpeechRecognition.stopListening();
+    } else {
+      resetTranscript();
+      setSearch("");
+      SpeechRecognition.startListening({ continuous: false });
+    }
+  }
+  useEffect(() => {
+    if (listening) {
+      setSearch(transcript);
+      navigate(`/search?q=${transcript}`);
+    }
+  }, [transcript]);
   return (
     <header className="h-16 shadow-md bg-[#FFFFFF]  z-50 fixed top-0 w-full">
       <div className="h-full container mx-auto flex justify-between items-center pr-8">
@@ -70,8 +89,12 @@ const Header = () => {
             placeholder=" Search for products, brands and more "
             className="w-full outline-none h-10 bg-[#F5F5F6] text-sm text-[#47494e] placeholder:text-[#66696e]"
             onChange={handleSearch}
-            value={search}
+            value={listening ? transcript : search}
           />
+          <div onClick={handleVoiceSearch} className="text-lg min-w-[40px] h-10 bg-[#F5F5F6] flex items-center justify-center rounded-r-full text-white font-bold">
+            {!listening ? <FaMicrophoneSlash className="text-[#FF527B] text-2xl cursor-pointer"/> : <CiMicrophoneOn className="text-[#FF527B] text-2xl cursor-pointer" />
+          }
+          </div>
         </div>
 
         <div className="flex items-center gap-7 ">

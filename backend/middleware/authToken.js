@@ -4,7 +4,7 @@ async function authToken(req,res,next){
     try{
         const token = req.cookies?.token
 
-        console.log("token",token)
+        // console.log("token",token)
         if(!token){
             return res.status(200).json({
                 message : "Please Login...!",
@@ -15,8 +15,8 @@ async function authToken(req,res,next){
         }
 
         jwt.verify(token, process.env.TOKEN_SECRET_KEY, function(err, decoded) {
-            console.log(err)
-            console.log("decoded",decoded)
+            // console.log(err)
+            // console.log("decoded",decoded)
             
             if(err){
                 console.log("error auth", err)

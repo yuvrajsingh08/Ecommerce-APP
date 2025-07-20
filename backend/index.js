@@ -11,12 +11,13 @@ app.use(cors({
     origin : process.env.FRONTEND_URL,
     credentials : true
 }))
+// app.use('/api/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json())
 app.use(cookieParser())
 
 app.use("/api",router)
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8000
 
 
 connectDB().then(()=>{

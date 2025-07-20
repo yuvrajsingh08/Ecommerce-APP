@@ -4,7 +4,7 @@ const uploadImage = async (image) => {
   const formData = new FormData();
   formData.append("file", image);
   formData.append("upload_preset", "mern-product");
-    console.log("Yeh h meri key", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
+    // console.log("Yeh h meri key", process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
   const dataResponse = await fetch(url, {
     method: "post",
     body: formData,

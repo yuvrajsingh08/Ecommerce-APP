@@ -4,6 +4,7 @@ import displayINRCurrency from "../helpers/displayCurrency";
 import { IoMdClose } from "react-icons/io";
 import { AppContext } from "../context";
 import { toast } from "react-toastify";
+import {loadStripe} from '@stripe/stripe-js';
 
 const Cart = () => {
   const [data, setData] = useState([]);
@@ -114,15 +115,42 @@ const Cart = () => {
      (preve, curr) => preve + curr.quantity * curr?.productId?.sellingPrice,
      0
    );
+
+   const handlePayment = async() =>{
+
+      
+      const stripePromise = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+      const response = await fetch(SummaryApi.payment.url, {
+        method: SummaryApi.payment.method,
+        credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          cartItems: data
+        }),
+      });
+
+      const responseData = await response.json()
+      console.log("payment response", responseData);
+
+      if(responseData?.id) {
+       try{
+        stripePromise.redirectToCheckout({sessionId : responseData.id})
+       }catch(e) {
+        console.log("error aagaya", e)
+       }
+      }
+   }
    useEffect(() => {
      setLoading(true);
      handleLoading();
      setLoading(false);
    }, []);
-   console.log(data);
+  //  console.log(data);
 
   return (
-    <div className="container mx-auto md:px-40">
+    <div className="container mx-auto md:px-40 h-fit">
       {data.length === 0 && !loading ? (
         <div className="text-center text-lg my-3 flex justify-center items-center h-[calc(100vh-6rem)]">
           <p className=" text-[#808080ac] text-4xl font-semibold tracking-wider  py-5">
@@ -130,9 +158,9 @@ const Cart = () => {
           </p>
         </div>
       ) : (
-        <div className="flex flex-col lg:flex-row gap-10 lg:justify-between p-4">
+        <div className="flex flex-col xl:flex-row lg:gap-10 gap-0 lg:justify-between p-4 ">
           {/***view product */}
-          <div className="w-full max-w-3xl">
+          <div className="w-full max-w-3xl xl:h-[calc(100vh-6rem)]  scroll-smooth overflow-y-scroll scrollbar-none ">
             {loading
               ? loadingCart?.map((el, index) => {
                   return (
@@ -146,12 +174,13 @@ const Cart = () => {
                   return (
                     <div
                       key={product?._id + "Add To Cart Loading"}
-                      className="md:w-full w-96 bg-slate-50 md:h-36 h-40 my-4 border border-slate-300  rounded grid grid-cols-[128px,1fr] mx-auto"
+                      className="md:w-full w-full bg-slate-50 md:h-36 h-40 my-4 border border-slate-300  rounded grid grid-cols-[128px,1fr] mx-auto "
                     >
                       <div className="md:w-32 w-36 md:h-36 h-40 bg-slate-200">
                         <img
                           src={product?.productId?.productImage[0]}
                           className="w-full h-full object-scale-down mix-blend-multiply"
+                          alt={index}
                         />
                       </div>
                       <div className="md:px-4 px-6 py-2 relative">
@@ -215,9 +244,10 @@ const Cart = () => {
                   );
                 })}
           </div>
-
           {/***summary  */}
-          <div className="mt-5 lg:mt-0 w-full max-w-sm  mx-auto ">
+          
+          
+          <div className="mt-5  lg:mt-0 w-full xl:max-w-sm  mx-auto ">
             {loading ? (
               <div className="h-36 bg-slate-200 border border-slate-300 animate-pulse"></div>
             ) : (
@@ -247,7 +277,10 @@ const Cart = () => {
                   <p className="text-black">{displayINRCurrency(finalPrice)}</p>
                 </div>
 
-                <button className="bg-[#FF527B] p-2 mt-4 text-white w-full mx-auto tracking-wider font-bold">
+                <button
+                  onClick={handlePayment}
+                  className="bg-[#FF527B] p-2 mt-4 text-white w-full mx-auto tracking-wider font-bold"
+                >
                   PLACE ORDER
                 </button>
               </div>

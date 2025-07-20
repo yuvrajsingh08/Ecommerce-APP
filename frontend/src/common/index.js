@@ -1,4 +1,4 @@
-const backendDomin = "https://ecommerce-app-backend-uf92.onrender.com";
+const backendDomin = "http://localhost:8000";
 
 const SummaryApi = {
   signUP: {
@@ -77,6 +77,18 @@ const SummaryApi = {
     url: `${backendDomin}/api/filter-product`,
     method: "post",
   },
+  payment: {
+    url: `${backendDomin}/api/checkout`,
+    method: "post",
+  },
+  getOrder : {
+      url : `${backendDomin}/api/order-list`,
+      method : 'get'
+  },
+  allOrder : {
+      url : `${backendDomin}/api/all-order`,
+      method : 'get'
+  }
 };
 
 export default SummaryApi;

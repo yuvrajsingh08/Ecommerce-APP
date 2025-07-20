@@ -35,7 +35,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
   const handleUploadProduct = async (e) => {
     const file = e.target.files[0];
     const uploadImageCloudinary = await uploadImage(file);
-    console.log("Yeh h  data",uploadImageCloudinary);
+    // console.log("Yeh h  data",uploadImageCloudinary);
     setData((preve) => {
       return {
         ...preve,
@@ -70,7 +70,7 @@ const UploadProduct = ({ onClose, fetchData }) => {
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: e.target,
     });
 
     const responseData = await response.json();
