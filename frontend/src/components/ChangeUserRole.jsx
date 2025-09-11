@@ -38,49 +38,54 @@ const ChangeUserRole = ({ name, email, role, userId, onClose, callFunc }) => {
   };
 
   return (
-    <div className="fixed top-0 bottom-0 left-0 right-0 w-full h-full z-10 flex justify-between items-center bg-white bg-opacity-60">
-      <div className="mx-auto bg-red-600 shadow-2xl w-full max-w-sm rounded-lg overflow-hidden">
-        <div className="bg-red-600 ">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      {/* Modal container with animation */}
+      <div className="w-full max-w-md bg-white rounded-xl shadow-2xl animate-fadeIn">
+        {/* Header */}
+        <div className="flex items-center justify-between bg-[#FF527B] px-4 py-3">
+          <h1 className="text-lg font-semibold text-white">Change User Role</h1>
           <button
-            className="block ml-auto text-xl mr-2 mt-2 text-white"
-            onClick={onClose}
-          >
+            className="text-white text-2xl hover:text-pink-100 transition"
+            onClick={onClose}>
             <IoMdClose />
           </button>
-
-          <h1 className="pb-4 text-xl font-medium text-center text-white">
-            Change User Role
-          </h1>
         </div>
 
-        <div className="bg-white p-4">
-          <p>Name : {name}</p>
-          <p>Email : {email}</p>
+        {/* Body */}
+        <div className="p-6 space-y-4">
+          <p>
+            <span className="font-medium">Name:</span> {name}
+          </p>
+          <p>
+            <span className="font-medium">Email:</span> {email}
+          </p>
 
-          <div className="flex items-baseline justify-between my-4">
-            <div className="flex items-center justify-between ">
-              <p>Role :</p>
-              <select
-                className="border px-2 py-1"
-                value={userRole}
-                onChange={handleOnChangeSelect}
-              >
-                {Object.values(ROLE).map((el) => {
-                  return (
-                    <option value={el} key={el}>
-                      {el}
-                    </option>
-                  );
-                })}
-              </select>
-            </div >
-            <button
-              className="w-fit  block mt-4 py-1 px-3 rounded-full bg-red-600 text-white hover:bg-red-700"
-              onClick={updateUserRole}
-            >
-              Change Role
-            </button>
+          {/* Role selector */}
+          <div className="flex flex-col gap-2">
+            <label htmlFor="role" className="font-medium">
+              Role:
+            </label>
+            <select
+              id="role"
+              className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#FF527B]"
+              value={userRole}
+              onChange={handleOnChangeSelect}>
+              {Object.values(ROLE).map((el) => (
+                <option value={el} key={el}>
+                  {el}
+                </option>
+              ))}
+            </select>
           </div>
+        </div>
+
+        {/* Footer */}
+        <div className="flex justify-end px-6 pb-4">
+          <button
+            className="px-5 py-2 rounded-md bg-[#FF527B] text-white font-medium hover:bg-pink-600 transition"
+            onClick={updateUserRole}>
+            Change Role
+          </button>
         </div>
       </div>
     </div>
