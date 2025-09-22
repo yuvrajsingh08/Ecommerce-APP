@@ -21,10 +21,11 @@ import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
 import OrderPage from "./pages/OrderPage";
 import AllOrders from "./pages/AllOrders";
+import AccountPage from "./pages/AccountPage";
 
 
 function App() {
-  
+
   const { fetchUserDetails, fetchUserAddToCart } = useContext(AppContext);
 
   useEffect(() => {
@@ -36,13 +37,14 @@ function App() {
       <ToastContainer position="top-center" />
 
       <Header />
-      <main className="min-h-[calc(100vh-120px)] pt-16 z-10">
+      <main className="min-h-[calc(100vh-120px)] pt-16 z-10 scrollbar-none">
         {/* <Outlet /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/account-page" element={<AccountPage/>} />
           <Route path="/admin-panel" element={<AdminPanel />}>
             <Route path="all-users" element={<AllUsers />} />
             <Route path="all-products" element={<AllProducts />} />

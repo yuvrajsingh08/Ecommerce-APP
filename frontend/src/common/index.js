@@ -1,4 +1,4 @@
-const backendDomin = "https://ecommerce-app-backend-uf92.onrender.com";
+const backendDomin = process.env.REACT_APP_API_URL;
 
 const SummaryApi = {
   signUP: {
@@ -88,6 +88,10 @@ const SummaryApi = {
   allOrder : {
       url : `${backendDomin}/api/all-order`,
       method : 'get'
+  },
+  deleteUser : {
+      url : `${backendDomin}/api/delete-user`,
+      method : 'delete'
   }
 };
 

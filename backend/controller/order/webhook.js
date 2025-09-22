@@ -33,7 +33,7 @@ const webhooks = async (req, res) => {
         secret: endpointSecret,
     });
     let event;
-
+    console.log("calling wehook 1");
     try {
         event = stripe.webhooks.constructEvent(payloadString, header, endpointSecret);
     } catch (err) {
@@ -41,7 +41,8 @@ const webhooks = async (req, res) => {
         res.status(400).send(`Webhook Error: ${err.message}`);
         return;
     }
-
+    console.log("calling wehook 2");
+    console.log(event.type);
     // Handle the event
     switch(event.type) {
         case 'checkout.session.completed':
@@ -61,12 +62,12 @@ const webhooks = async (req, res) => {
             }
             const order = new orderModel(orderDetails)
             const saveOrder = await order.save()
-            console.log("saveOrder", saveOrder) 
+            console.log("saveOrder", saveOrder)
             if(saveOrder?._id){
                 const deleteCartItem = await addToCartModel.deleteMany({ userId : session.metadata.userId })
             }
             break;
-        default: 
+        default:
             console.log(`Unhandled even type ${event.type}`);
     }
 

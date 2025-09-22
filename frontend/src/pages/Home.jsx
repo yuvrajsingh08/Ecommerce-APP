@@ -7,7 +7,7 @@ import VerticalCardProduct from "../components/VerticalCardProduct";
 
 const Home = () => {
   return (
-    <div>
+    <div className="scrollbar-none">
       <CategoryList />
       <BannerProduct />
       <CategoryWise />
