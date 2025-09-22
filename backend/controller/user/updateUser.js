@@ -1,41 +1,50 @@
 const userModel = require("../../models/userModel")
 
-async function updateUser(req,res){
-    try{
-        // this is your login userID comes directly after middleware
-        const sessionUser = req.userId
+async function updateUser(req, res) {
+  try {
+    const sessionUser = req.userId;
+    const { userId, email, name, role } = req.body;
 
-        // this is the reqested user id whom you want to update
-        const { userId , email, name, role} = req.body
+    const payload = {
+      ...(email && { email }),
+      ...(name && { name }),
+      ...(role && { role }),
+    };
+    console.log("payload", payload);    
 
-        const payload = {
-            ...( email && { email : email}),
-            ...( name && { name : name}),
-            ...( role && { role : role}),
-        }
-
-        const user = await userModel.findById(sessionUser)
-
-        console.log("user.role",user.role)
-
-
-
-        const updateUser = await userModel.findByIdAndUpdate(userId,payload)
-
-        
-        res.json({
-            data : updateUser,
-            message : "User Updated",
-            success : true,
-            error : false
-        })
-    }catch(err){
-        res.status(400).json({
-            message : err.message || err,
-            error : true,
-            success : false
-        })
+    const user = await userModel.findById(sessionUser);
+    if (!user) {
+      return res.status(404).json({
+        message: "Logged-in user not found",
+        error: true,
+        success: false,
+      });
     }
+
+    console.log("user.role", user.role);
+
+    const updateUser = await userModel.findByIdAndUpdate(userId, payload, { new: true });
+    if (!updateUser) {
+      return res.status(404).json({
+        message: "User to update not found",
+        error: true,
+        success: false,
+      });
+    }
+
+    res.json({
+      data: updateUser,
+      message: "User Updated",
+      success: true,
+      error: false,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: err.message || err,
+      error: true,
+      success: false,
+    });
+  }
 }
 
 

@@ -24,7 +24,7 @@ const AdminPanel = () => {
   ];
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex bg-gray-50">
+    <div className="min-h-[calc(100vh-4rem)] flex bg-gray-50 scrollbar-none">
       {/* Mobile header */}
       <div className="md:hidden fixed top-16 left-0 right-0 bg-white shadow flex items-center justify-between px-4 py-2 z-40">
         <h2 className="text-lg font-semibold text-[#FF527B]">Admin Panel</h2>

@@ -4,7 +4,7 @@ const paymentController = async (request, response) => {
    try{
     const {cartItems} = request.body
 
-    // console.log(cartItems[0].productId)
+    console.log(cartItems[0].productId)
     const user = await userModel.findOne({_id: request.userId })
     const params = {
       submit_type: "pay",
@@ -15,13 +15,13 @@ const paymentController = async (request, response) => {
         userId: request.userId,
       },
       line_items: cartItems.map((item, index) => {
-        // console.log("Images:", item.productId.productImage)
+        console.log("Images:", item.productId.productImage)
         return {
           price_data: {
             currency: "inr",
             product_data: {
               name: item.productId.productName,
-              
+
               images: item.productId.productImage,
               metadata: {
                 productId: item.productId._id,
