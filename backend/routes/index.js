@@ -26,6 +26,7 @@ const paymentController = require('../controller/order/paymentController')
 const webhooks = require('../controller/order/webhook')
 const orderController = require('../controller/order/orderController')
 const allOrderController = require('../controller/order/allOrderController')
+const updateOrderStatus = require('../controller/order/updateOrderStatus')
 const deleteUser = require('../controller/user/deleteUser')
 
 
@@ -63,6 +64,7 @@ router.post("/checkout",authToken, paymentController);
 router.post('/webhook', webhooks) // api/webhooks
 router.get("/order-list",authToken,orderController)
 router.get("/all-order",authToken,allOrderController)
+router.post("/update-order-status",authToken,updateOrderStatus)
 
 
 

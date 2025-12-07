@@ -7,7 +7,7 @@ const allOrderController = async (req, res)=> {
     const currentUser = await userModel.findById(currentUserId);
 
     if(currentUser.role !== 'ADMIN') {
-         return response.status(500).json({
+         return res.status(500).json({
             message : "access denied"
         })
     }
