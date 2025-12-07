@@ -8,6 +8,7 @@ import scrollTop from "../helpers/scrollTop";
 
 const CategroyWiseProductDisplay = ({ category, heading }) => {
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const loadingList = new Array(13).fill(null);
 
@@ -20,7 +21,7 @@ const CategroyWiseProductDisplay = ({ category, heading }) => {
 
   const fetchData = async () => {
     setLoading(true);
-    const categoryProduct = await fetchCategoryWiseProduct(category);
+    const categoryProduct = await fetchCategoryWiseProduct(category, page);
     setLoading(false);
 
     console.log("horizontal data", categoryProduct.data);
@@ -29,7 +30,7 @@ const CategroyWiseProductDisplay = ({ category, heading }) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [page]);
 
   return (
       <div className="container mx-auto px-4 my-6 relative">
@@ -89,6 +90,12 @@ const CategroyWiseProductDisplay = ({ category, heading }) => {
                 </div>
               </Link>
             ))}
+      </div>
+      <div className="w-full my-2 flex justify-between px-6">
+        <button className={` p-2 rounded-lg ${page === 1 ? 'bg-gray-200 text-gray-400' : 'bg-red-300'}`} onClick={()=> {
+          if(page > 1) setPage(page-1)
+        }}>Prev</button>
+        <button className="bg-red-300 p-2  rounded-lg" onClick={()=> setPage(page+1)}>Next</button>
       </div>
     </div>
   );
