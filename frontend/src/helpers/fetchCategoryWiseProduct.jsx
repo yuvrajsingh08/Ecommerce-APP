@@ -1,6 +1,6 @@
 import SummaryApi from "../common";
 
-const fetchCategoryWiseProduct = async (category) => {
+const fetchCategoryWiseProduct = async (category, page) => {
   const response = await fetch(SummaryApi.categoryWiseProduct.url, {
     method: SummaryApi.categoryWiseProduct.method,
     headers: {
@@ -8,6 +8,8 @@ const fetchCategoryWiseProduct = async (category) => {
     },
     body: JSON.stringify({
       category: category,
+      page: page,
+      limit: 4,
     }),
   });
 

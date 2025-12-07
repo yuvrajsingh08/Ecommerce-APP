@@ -89,6 +89,10 @@ const SummaryApi = {
       url : `${backendDomin}/api/all-order`,
       method : 'get'
   },
+  updateOrderStatus : {
+      url : `${backendDomin}/api/update-order-status`,
+      method : 'post'
+  },
   deleteUser : {
       url : `${backendDomin}/api/delete-user`,
       method : 'delete'

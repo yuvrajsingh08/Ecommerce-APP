@@ -32,6 +32,16 @@ const orderSchema = new mongoose.Schema({
     totalAmount : {
         type : Number,
         default : 0
+    },
+    orderStatus : {
+        type : String,
+        enum : ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'],
+        default : 'pending'
+    },
+    deliveryStatus : {
+        type : String,
+        enum : ['not_shipped', 'in_transit', 'out_for_delivery', 'delivered', 'failed'],
+        default : 'not_shipped'
     }
 },{
     timestamps : true

@@ -34,7 +34,28 @@ function App() {
   },[]);
   return (
     <>
-      <ToastContainer position="top-center" />
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        style={{
+          borderRadius: '12px',
+        }}
+        toastStyle={{
+          borderRadius: '12px',
+          padding: '16px',
+          boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
+          fontSize: '14px',
+          fontWeight: '500'
+        }}
+      />
 
       <Header />
       <main className="min-h-[calc(100vh-120px)] pt-16 z-10 scrollbar-none">

@@ -213,7 +213,7 @@ const { fetchUserAddToCart } = useContext(AppContext);
   </div>
 
   {data.category && (
-    <CategroyWiseProductDisplay category={data?.category} heading={"Similar Products"} />
+    <CategroyWiseProductDisplay category={data?.category} page={1} limit={4}  heading={"Similar Products"} />
   )}
 </div>
   );
